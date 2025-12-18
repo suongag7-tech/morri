@@ -1,0 +1,298 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+<title>Em Ở Đây</title>
+
+<style>
+*{margin:0;padding:0;box-sizing:border-box;}
+
+body{
+  height:100vh;
+  background:#0e1117;
+  font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;
+  color:#e6e6e6;
+  overflow:hidden;
+}
+
+/* ================= INTRO ================= */
+#introScreen{
+  position:fixed;
+  inset:0;
+  display:flex;
+  justify-content:center;
+  align-items:center;
+  text-align:center;
+  background:#0e1117;
+  z-index:10;
+  transition:opacity 2.5s ease;
+}
+#introScreen.hide{
+  opacity:0;
+  pointer-events:none;
+}
+.introText{
+  font-size:18px;
+  line-height:1.9;
+  opacity:0;
+  transition:opacity 2.5s ease;
+}
+.introText.show{opacity:1;}
+
+/* ================= MAIN ================= */
+#main{
+  height:100vh;
+  display:flex;
+  justify-content:center;
+  align-items:center;
+  background:#0e1117;
+  transition:background 6s ease;
+}
+#main.christmas{
+  background:radial-gradient(circle at top,
+    #b9d9f0 0%,
+    #7fb3d5 40%,
+    #4a7fa8 75%,
+    #2e4f6b 100%);
+}
+
+/* ÁNH SÁNG */
+.glow{
+  position:fixed;
+  inset:0;
+  background:radial-gradient(circle at center,
+    rgba(255,220,160,0.35),
+    rgba(255,220,160,0.12),
+    transparent 65%);
+  opacity:0;
+  transition:opacity 6s ease;
+  pointer-events:none;
+}
+.glow.on{opacity:1;}
+
+.container{
+  text-align:center;
+  padding:24px;
+  max-width:420px;
+  width:100%;
+  z-index:2;
+}
+
+/* TEXT */
+.text{
+  opacity:0;
+  font-size:18px;
+  line-height:1.95;
+  letter-spacing:.4px;
+  text-shadow:0 1px 2px rgba(0,0,0,.25);
+  transition:opacity 2.5s ease;
+}
+.text.show{opacity:1;}
+
+.small{
+  font-size:14px;
+  opacity:.55;
+  margin-top:26px;
+  transition:opacity 1.2s ease;
+}
+
+/* ĐÈN */
+.lamp{
+  width:56px;
+  height:96px;
+  margin:34px auto 6px;
+  position:relative;
+  cursor:pointer;
+}
+.lamp .bulb{
+  width:34px;
+  height:34px;
+  border-radius:50%;
+  background:#3a3a3a;
+  margin:0 auto;
+}
+.lamp .stem{
+  width:4px;
+  height:48px;
+  background:#555;
+  margin:0 auto;
+  border-radius:2px;
+}
+
+@keyframes breathe{
+  0%,100%{
+    box-shadow:0 0 25px rgba(255,220,160,.5),
+               0 0 70px rgba(255,220,160,.35);
+  }
+  50%{
+    box-shadow:0 0 35px rgba(255,220,160,.7),
+               0 0 100px rgba(255,220,160,.45);
+  }
+}
+@keyframes tap{
+  0%{transform:scale(1);}
+  50%{transform:scale(.94);}
+  100%{transform:scale(1);}
+}
+.lamp.on{animation:tap .35s ease;}
+.lamp.on .bulb{
+  background:#ffdca0;
+  animation:breathe 4.5s ease-in-out infinite;
+}
+
+/* TUYẾT */
+.snow{
+  position:fixed;
+  top:-10px;
+  color:#fff;
+  animation:fall linear forwards;
+  pointer-events:none;
+}
+@keyframes fall{
+  to{transform:translateY(110vh);opacity:0;}
+}
+
+/* FOOTER */
+.footer{
+  position:fixed;
+  bottom:16px;
+  right:16px;
+  font-size:12px;
+  opacity:0;
+  color:#f1f6f9;
+  transition:opacity 3s ease;
+}
+.footer.show{opacity:.65;}
+</style>
+</head>
+
+<body>
+
+<!-- INTRO -->
+<div id="introScreen">
+  <div class="introText" id="introText">
+    Có một góc nhỏ,<br>
+    để chị nghỉ một chút.
+  </div>
+</div>
+
+<!-- MAIN -->
+<div id="main">
+  <div class="glow" id="glow"></div>
+
+  <div class="container">
+
+    <div id="mainText" class="text">
+      Nếu hôm nay chị bé mệt,<br>
+      thì ở đây… không cần phải nói gì cả.
+    </div>
+
+    <div class="lamp" id="lamp">
+      <div class="bulb"></div>
+      <div class="stem"></div>
+    </div>
+
+    <div class="small" id="hint">Chị bé chạm vào đèn đii</div>
+
+    <div style="margin-top:28px;">
+      <div id="l1" class="text">
+        Trời tối rồi <br>
+        Em vẫn ở đây để thắp đèn cho chị.
+      </div>
+
+      <div id="l2" class="text" style="margin-top:18px;">
+        Đèn của em không quá sáng,<br>
+        nhưng em hy vọng nó khiến chị thấy trời không tối như chị nghĩ.
+      </div>
+
+      <div id="l3" class="text" style="margin-top:18px;">
+        Đông rồi,<br>gió sẽ rất lớn.
+      </div>
+
+      <div id="line4" class="text" style="margin-top:30px;">
+        Em không ngăn được gió lớn,<br>
+        Nhưng em có thể khoác thêm áo cho chị,<br>
+        để chị đỡ lạnh hơn một chút<br><br>
+        Em ở đây<br>
+        Luôn là như vậy.
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<div id="footer" class="footer">Spero meliora 🌞</div>
+
+<audio id="music" src="love.mp3" preload="auto"></audio>
+
+<script>
+const introScreen = document.getElementById("introScreen");
+const introText   = document.getElementById("introText");
+
+const lamp   = document.getElementById("lamp");
+const glow   = document.getElementById("glow");
+const music  = document.getElementById("music");
+const hint   = document.getElementById("hint");
+
+music.volume = 0;
+
+/* INTRO */
+setTimeout(()=>introText.classList.add("show"),600);
+setTimeout(()=>{
+  introScreen.classList.add("hide");
+  setTimeout(()=>introScreen.remove(),2500);
+},4200);
+
+/* MAIN */
+lamp.addEventListener("click", start, { once:true });
+
+function start(){
+  hint.style.opacity = "0"; // Ẩn dòng hướng dẫn
+  lamp.classList.add("on");
+  glow.classList.add("on");
+
+  music.muted = true;
+  music.play().then(()=>music.muted=false).catch(()=>{});
+
+  let v = 0;
+  const fade = setInterval(()=>{
+    if(v < 0.12){ v += 0.004; music.volume = v; }
+    else clearInterval(fade);
+  },120);
+
+  setTimeout(()=>mainText.classList.add("show"),1200);
+  setTimeout(()=>l1.classList.add("show"),2600);
+  setTimeout(()=>l2.classList.add("show"),5200);
+  setTimeout(()=>l3.classList.add("show"),7800);
+  setTimeout(finalScene,10500);
+}
+
+function finalScene(){
+  main.classList.add("christmas");
+
+  setTimeout(()=>{
+    line4.classList.add("show");
+    footer.classList.add("show");
+    snowLoop();
+  },1500);
+}
+
+function snowLoop(){
+  setInterval(()=>{
+    const s = document.createElement("div");
+    s.className = "snow";
+    s.textContent = "❄";
+    const size = 8 + Math.random()*14;
+    s.style.fontSize = size+"px";
+    s.style.left = Math.random()*100+"vw";
+    s.style.opacity = size>16?.9:.4;
+    s.style.animationDuration = (size>16?7:12)+Math.random()*4+"s";
+    document.body.appendChild(s);
+    setTimeout(()=>s.remove(),16000);
+  },550);
+}
+</script>
+
+</body>
+</html>
